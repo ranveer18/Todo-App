@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { BiSolidAddToQueue } from "react-icons/bi";
 import { IoIosRemoveCircle } from "react-icons/io";
 import "./style.css";
@@ -14,12 +14,22 @@ const Todo = () => {
   const [input, setInput] = useState("");
   const [item, setItem] = useState(getLSItem());
   const [remove, setRemove] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+
+  const focus = useRef();
+  useEffect(() => {
+    if (focus.current.value.length > 0) {
+      setIsFocused(true);
+    }
+  }, [isFocused]);
+
   const addItem = (e) => {
     if (input) {
       setItem([...item, input]);
       setInput("");
       setRemove(true);
     }
+    setIsFocused(false);
   };
 
   const deleteItem = (id) => {
@@ -45,11 +55,16 @@ const Todo = () => {
       <section>
         <h1 style={{ color: "#12372A" }}>Todo List App</h1>
         <div className="input_conatiner">
+          <label htmlFor="input" className={isFocused ? "focus" : "move"}>
+            Enter Item
+          </label>
           <input
             type="text"
             name=""
-            id=""
-            placeholder="Enter Item"
+            id="input"
+            ref={focus}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
             value={input}
             onChange={(e) => setInput(e.target.value)}
           />
