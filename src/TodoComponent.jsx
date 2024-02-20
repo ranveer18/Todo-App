@@ -2,6 +2,13 @@ import React, { useEffect, useState, useRef } from "react";
 import { BiSolidAddToQueue } from "react-icons/bi";
 import { IoIosRemoveCircle } from "react-icons/io";
 import "./style.css";
+
+// const Loading = () => {
+//   setInterval(() => {
+//     <MyLoader />;
+//   }, 3000);
+// };
+
 const getLSItem = () => {
   const list = localStorage.getItem("item");
   if (list) {
@@ -10,12 +17,13 @@ const getLSItem = () => {
     return [];
   }
 };
-const Todo = () => {
+const TodoComponent = () => {
   const [input, setInput] = useState("");
   const [item, setItem] = useState(getLSItem());
   const [remove, setRemove] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
 
+  // setLoading(false);
   const focus = useRef();
   useEffect(() => {
     if (focus.current.value.length > 0) {
@@ -99,5 +107,4 @@ const Todo = () => {
     </>
   );
 };
-
-export default Todo;
+export default TodoComponent;
